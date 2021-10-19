@@ -17,6 +17,8 @@ bs='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
 app=dash.Dash(__name__, external_stylesheets=[dbc.themes.YETI],suppress_callback_exceptions=True,
               meta_tags=[{'name': 'viewport',
                           'content': 'width=device-width, initial-scale=1.0'}])
+
+server=app.server
 colors = {
     'background': '##cccccc'
 }
@@ -242,4 +244,5 @@ def train_and_display(name):
 if __name__ == '__main__':
     app.run_server(debug=True)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+
