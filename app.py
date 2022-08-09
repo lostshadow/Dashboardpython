@@ -49,9 +49,11 @@ dbc.NavbarSimple(
 
             dbc.Row([
                 dbc.Col(html.H4("Dashboard and data."), width={'size': 6, 'offset': 1, 'order': 1}),
-                dbc.Col(html.H4('''Pour présenter au mieux l'intérêt que je cultive pour la data science, et le pourquoi de ce choix professionnel,
-                                 j'ai choisi de mettre en application des cas d'usage et de déployer des dashboard sur différents sujets afin de démontrer l'utilité de ces moyens et technologies.
-                                 Visualiser, mettre en évidence des tendances, améliorer la prise de décision, et l'analyse dans le domaine de la business intelligence.''',className='text-left text-primary, mb-6'),
+                dbc.Col(html.H4('''Les données organisées, structurées servent la stratégie, elles sont représentées de façon brut et visuelle. Si le principe est identique pour de nombreux projets, les modalités et les options
+                Diffèrent d'une situation à l'autre. Aujourd'hui il existe de nombreuses options pour construire un tableau de bord pertinent et lisible.
+                Cela commence avec une page Jupyter notebook, mais cela pourrait être un tableau construit sur Streamlit, Power BI, Data Studio de google en passant par QlickView ou Tableau.
+            j'ai choisi une façon simple de montrer un tableau de bord, utilisant des données correspondant à l'industrie automobile, ceci à l'aide d' outils simple comme python et Dash le tout déployer sur Heroku.
+            Ceci est un simple exemple pour montrer que tout est possible afin de mettre en évidence des tendances dans le domaine de la business intelligence.''',className='text-left text-primary, mb-6'),
                 width={'size': 6, 'offset': 1, 'order': 1}),
             ]),
 
