@@ -14,7 +14,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import linear_model, tree, neighbors
 
 bs='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
-app=dash.Dash(__name__, external_stylesheets=[dbc.themes.YETI],suppress_callback_exceptions=True,
+app=dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY],suppress_callback_exceptions=True,
               meta_tags=[{'name': 'viewport',
                           'content': 'width=device-width, initial-scale=1.0'}])
 
@@ -38,23 +38,21 @@ index_page = html.Div([
 dbc.NavbarSimple(
     children=[
 
-        dbc.NavItem(dbc.NavLink("Page car", href="/page-2")),
+        dbc.NavItem(dbc.NavLink("PAGE CAR", href="/page-2")),
     ],
-    brand="Dashboard and data Home",
+    brand="Home",
     brand_href="/",
     color="primary",
     dark=True,
 ),
     dbc.Container([
+
             dbc.Row([
-                 dbc.Col(html.H1("Dashboard and data", className='text-center text-primary, mb-4'),
-                width=12),
-            ]),
-            dbc.Row([
-                dbc.Col(html.H3('''Pour présenter au mieux l'intérêt que je cultive pour la data science, et le pourquoi de ce choix professionnel,
+                dbc.Col(html.H4("Dashboard and data."), width={'size': 6, 'offset': 1, 'order': 1}),
+                dbc.Col(html.H4('''Pour présenter au mieux l'intérêt que je cultive pour la data science, et le pourquoi de ce choix professionnel,
                                  j'ai choisi de mettre en application des cas d'usage et de déployer des dashboard sur différents sujets afin de démontrer l'utilité de ces moyens et technologies.
-                                 Visualiser, mettre en évidence des tendances, améliorer la prise de décision, et l'analyse dans le domaine de la business intelligence.''',className='text-left text-primary, mb-4'),
-                width=7),
+                                 Visualiser, mettre en évidence des tendances, améliorer la prise de décision, et l'analyse dans le domaine de la business intelligence.''',className='text-left text-primary, mb-6'),
+                width={'size': 6, 'offset': 1, 'order': 1}),
             ]),
 
     ], fluid=True)
@@ -95,9 +93,9 @@ fuel_type=df_car['fuel-type'].unique()
 page_2_layout = dbc.Container([
     dbc.NavbarSimple(
         children=[
-            dbc.NavItem(dbc.NavLink("Page car", href="/page-2")),
+            dbc.NavItem(dbc.NavLink("PAGE CAR", href="/page-2")),
         ],
-        brand="Dashboard and data Home",
+        brand="Home",
         brand_href="/",
         color="primary",
         dark=True,
@@ -105,8 +103,8 @@ page_2_layout = dbc.Container([
 
     # Place for title
     dbc.Row([
-        dbc.Col(html.H1("Web Dashboard Présentation des statistiques pour l'automobile", className='text-center text-primary, mb-4'),
-                width=12)
+        dbc.Col(html.H4("Web Dashboard Présentation statistique pour l'automobile", className='text-left text-primary, mb-4'),
+                width={'size': 4, 'offset': 4, 'order': 1})
 
     ]),
     # Deuxième ligne
