@@ -92,6 +92,17 @@ df_car_table=df_test_car.columns
 
 fuel_type=df_car['fuel-type'].unique()
 
+#**************************************************
+make_name=df_car.make.unique()
+make_value=df_car.make.value_counts()
+val_car=[]
+for i in make_value:
+    val_car.append(i)
+df_make=pd.DataFrame(data=zip(make_name, make_value), columns=['make', 'number_car'])
+fig_pie = px.pie(df_make, values='number_car', names='make', title='''Marques automobile de l'étude''')
+
+##############################################
+
 page_2_layout = dbc.Container([
     dbc.NavbarSimple(
         children=[
@@ -105,8 +116,48 @@ page_2_layout = dbc.Container([
 
     # Place for title
     dbc.Row([
-        dbc.Col(html.H4("Web Dashboard Présentation statistique pour l'automobile", className='text-left text-primary, mb-4'),
-                width={'size': 4, 'offset': 4, 'order': 1})
+        dbc.Col(html.H4("Dashboard Présentation statistique pour l'automobile", className='text-left text-primary, mb-4'),
+                width={'size': 7, 'offset': 4, 'order': 1})
+
+    ]),
+
+    # Premiere ligne descriptive
+    dbc.Row([
+        dbc.Col([
+            html.Div([
+html.H4("Présentation des données et explication", className='text-left text-primary, mb-4'),
+
+                    dcc.Markdown('''
+#### Source Kaggle '''),
+html.P('''L/100km signifie litre au 100, rpm est une abbreviation qui désigne la mesure de deux choses: le nombre de fois que le vilebrequin du moteur effectue une rotation complète par minute, et simultanément, le nombre de fois que chaque piston monte et descend dans son cylindre. /
+    Bore diamètre de chaques cylindres. The stroke ratio, déterminé en divisant the bore par the stroke, indique traditionnellement si un moteur est conçu pour la puissance à des régimes élevés (tr/min)(rpm)
+    Curb weight c'est Le poids à vide est le poids du véhicule, y compris un réservoir plein de carburant et tout l'équipement standard ''')
+            ]),
+ dcc.Markdown('''
+#### Les Colonnes'''),
+html.P(''' symboling, normalized-losses, make, fuel-type,
+       aspiration, num-of-doors, body-style, drive-wheels,
+       engine-location, wheel-base, length, width, height,
+       curb-weight, engine-type, num-of-cylinders,engine-size,
+       fuel-system, bore, stroke, compression-ratio, horsepower,
+       peak-rpm, city-L/100km, highway-L/100km, price, price-binned,
+       horsepower-binned, fuel-type-diesel, fuel-type-gas,
+       aspiration-std, aspiration-turbo''')
+
+        ], width={'size': 6, 'offset': 1, 'order': 1},
+            xs=12, sm=12, md=12, lg=5, xl=5),
+
+dbc.Col([
+    html.Div([
+
+        dcc.Graph(
+            id='graphpie',
+            figure=fig_pie
+        )
+    ])
+
+        ], width={'size': 6, 'offset': 1, 'order': 1},
+            xs=12, sm=12, md=12, lg=5, xl=5),
 
     ]),
     # Deuxième ligne
@@ -135,7 +186,7 @@ page_2_layout = dbc.Container([
 
         dbc.Col([
             html.Div([
-
+                html.Br(),
                 dash_table.DataTable(
                     id='df_grp02',
                     columns=[{"name": i, "id": i}
@@ -156,6 +207,7 @@ page_2_layout = dbc.Container([
         dbc.Row([
         dbc.Col([
             html.Div([
+                html.Br(),
                 dcc.Dropdown(
                     id="dropdown_car",
                     options=[{"label": x, "value": x} for x in fuel_type],
@@ -190,6 +242,28 @@ page_2_layout = dbc.Container([
             xs=12, sm=12, md=12, lg=5, xl=5),
 
     ]),
+
+    #troisieme ligne
+
+    dbc.Col([
+        html.Div([
+
+            html.H4('Scatter plot Height and width dataset car'),
+            dcc.Graph(id="scatter-plot"),
+            html.P("Height and width"),
+            dcc.RangeSlider(
+                id='range-slider',
+                min=0, max=1, step=0.1,
+                marks={0: '0', 1: '1'},
+                value=[0.5, 1]
+            ),
+
+        ]),
+
+    ], width={'size': 6, 'offset': 1, 'order': 1},
+        xs=12, sm=12, md=12, lg=5, xl=5
+    ),
+
 
 
 ], fluid=True)
@@ -239,6 +313,21 @@ def train_and_display(name):
     ])
 
     return fig
+
+##########callback scatter
+@app.callback(
+    Output("scatter-plot", "figure"),
+    Input("range-slider", "value"))
+def update_bar_chart(slider_range):
+
+    low, high = slider_range
+    mask = (df_car['width'] > low) & (df_car['width'] < high)
+    fig = px.scatter(
+        df_car[mask], x="width", y="height",
+        color="aspiration", size='length',
+        hover_data=['width'])
+    return fig
+
 
 
 if __name__ == '__main__':
