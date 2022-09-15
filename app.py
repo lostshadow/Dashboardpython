@@ -131,7 +131,7 @@ html.H4("Présentation des données et explication", className='text-left text-p
 #### Source Kaggle '''),
 html.P('''L/100km signifie litre au 100, rpm est une abbreviation qui désigne la mesure de deux choses: le nombre de fois que le vilebrequin du moteur effectue une rotation complète par minute, et simultanément, le nombre de fois que chaque piston monte et descend dans son cylindre. /
     Bore diamètre de chaques cylindres. The stroke ratio, déterminé en divisant the bore par the stroke, indique traditionnellement si un moteur est conçu pour la puissance à des régimes élevés (tr/min)(rpm)
-    Curb weight c'est Le poids à vide est le poids du véhicule, y compris un réservoir plein de carburant et tout l'équipement standard ''')
+    Curb weight c'est Le poids à vide du véhicule, y compris un réservoir plein de carburant et tout l'équipement standard ''')
             ]),
  dcc.Markdown('''
 #### Les Colonnes'''),
@@ -186,17 +186,22 @@ dbc.Col([
 
         dbc.Col([
             html.Div([
-                html.Br(),
-                dash_table.DataTable(
-                    id='df_grp02',
-                    columns=[{"name": i, "id": i}
-                             for i in df_grp02.columns],
-                    data=df_grp02.to_dict('records'),
-                    style_cell=dict(textAlign='left'),
-                    style_header=dict(backgroundColor="cadetblue"),
-                    style_data=dict(backgroundColor="lavender")
-                )
 
+                html.Br(),
+                ###########Pie chart place ################
+                html.H4('Distribution valeurs category'),
+                dcc.Graph(id="piegraph"),
+                html.P("Names:"),
+                dcc.Dropdown(id='names',
+                             options=['num-of-doors', 'body-style', 'drive-wheels',	'engine-type'],
+                             value='num-of-doors', clearable=False
+                             ),
+                html.P("Values:"),
+                dcc.Dropdown(id='values',
+                        options=['price', 'engine-size', 'bore', 'curb-weight'],
+                        value='price', clearable=False
+                ),
+                html.Br(),
             ]),
 
         ], width={'size': 6, 'offset': 1, 'order': 1},
@@ -327,6 +332,15 @@ def update_bar_chart(slider_range):
         color="aspiration", size='length',
         hover_data=['width'])
     return fig
+
+@app.callback(
+    Output("piegraph", "figure"),
+    Input("names", "value"),
+    Input("values", "value"))
+def generate_chart(names, values):
+    fig = px.pie(df_car, values=values, names=names, hole=.3)
+    return fig
+
 
 
 
