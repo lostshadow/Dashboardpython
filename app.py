@@ -174,6 +174,17 @@ dbc.Col([
                     style_cell=dict(textAlign='left'),
                     style_header=dict(backgroundColor="cadetblue"),
                     style_data=dict(backgroundColor="lavender")
+                ),
+                html.Br(),
+                dcc.Dropdown(
+                    id="dropdown_car",
+                    options=[{"label": x, "value": x} for x in fuel_type],
+                    value=fuel_type[0],
+                    clearable=False,
+                ),
+                dcc.Graph(
+                    id='bar-chart-car',
+
                 )
 
             ]),
@@ -221,17 +232,16 @@ dbc.Col([
         dbc.Row([
         dbc.Col([
             html.Div([
-                html.Br(),
-                dcc.Dropdown(
-                    id="dropdown_car",
-                    options=[{"label": x, "value": x} for x in fuel_type],
-                    value=fuel_type[0],
-                    clearable=False,
-                ),
-                dcc.Graph(
-                    id='bar-chart-car',
+            html.H4('Scatter plot Height and width dataset car'),
+                    dcc.Graph(id="scatter-plot"),
+                    html.P("Height and width"),
+                    dcc.RangeSlider(
+                        id='range-slider',
+                        min=0, max=1, step=0.1,
+                        marks={0: '0', 1: '1'},
+                        value=[0.5, 1]
+            ),
 
-                )
             ])
 
         ], width={'size': 7, 'offset': 1, 'order': 1},
@@ -262,15 +272,7 @@ dbc.Col([
     dbc.Col([
         html.Div([
 
-            html.H4('Scatter plot Height and width dataset car'),
-            dcc.Graph(id="scatter-plot"),
-            html.P("Height and width"),
-            dcc.RangeSlider(
-                id='range-slider',
-                min=0, max=1, step=0.1,
-                marks={0: '0', 1: '1'},
-                value=[0.5, 1]
-            ),
+
 
         ]),
 
