@@ -186,7 +186,16 @@ dbc.Col([
 
         dbc.Col([
             html.Div([
-
+                html.Br(),
+                dash_table.DataTable(
+                    id='df_grp02',
+                    columns=[{"name": i, "id": i}
+                             for i in df_grp02.columns],
+                    data=df_grp02.to_dict('records'),
+                    style_cell=dict(textAlign='left'),
+                    style_header=dict(backgroundColor="cadetblue"),
+                    style_data=dict(backgroundColor="lavender")
+                ),
                 html.Br(),
                 ###########Pie chart place ################
                 html.H4('Distribution valeurs category'),
@@ -201,7 +210,7 @@ dbc.Col([
                         options=['price', 'engine-size', 'bore', 'curb-weight'],
                         value='price', clearable=False
                 ),
-                html.Br(),
+            html.Br(),
             ]),
 
         ], width={'size': 6, 'offset': 1, 'order': 1},
