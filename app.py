@@ -202,12 +202,12 @@ dbc.Col([
                 dcc.Graph(id="piegraph"),
                 html.P("Names:"),
                 dcc.Dropdown(id='names',
-                             options=['num-of-doors', 'body-style', 'drive-wheels',	'engine-type'],
-                             value='num-of-doors', clearable=False
+                             options=['horsepower', 'highway-L/100km',	'city-L/100km'],
+                             value='horsepower', clearable=False
                              ),
                 html.P("Values:"),
                 dcc.Dropdown(id='values',
-                        options=['price', 'engine-size', 'bore', 'curb-weight'],
+                        options=['price', 'engine-size', 'bore', 'stroke', 'peak-rpm'],
                         value='price', clearable=False
                 ),
             html.Br(),
@@ -347,7 +347,7 @@ def update_bar_chart(slider_range):
     Input("names", "value"),
     Input("values", "value"))
 def generate_chart(names, values):
-    fig = px.pie(df_car, values=values, names=names, hole=.3)
+    fig = px.scatter(df_car, x=names, y=values, color="num-of-doors", size='curb-weight')
     return fig
 
 
