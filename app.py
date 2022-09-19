@@ -13,61 +13,7 @@ import plotly.graph_objects as go
 from sklearn.model_selection import train_test_split
 from sklearn import linear_model, tree, neighbors
 
-bs='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
-app=dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY],suppress_callback_exceptions=True,
-              meta_tags=[{'name': 'viewport',
-                          'content': 'width=device-width, initial-scale=1.0'}])
-
-server=app.server
-colors = {
-    'background': '##cccccc'
-}
-
-
-app.layout = html.Div([
-    dcc.Location(id='url', refresh=False),
-    html.Div(id='page-content'),
-
-
-])
-
-
-
-#******************Home Page*********************************
-index_page = html.Div([
-dbc.NavbarSimple(
-    children=[
-
-        dbc.NavItem(dbc.NavLink("PAGE CAR", href="/page-2")),
-    ],
-    brand="Home",
-    brand_href="/",
-    color="primary",
-    dark=True,
-),
-    dbc.Container([
-
-            dbc.Row([
-                dbc.Col(html.H4("Dashboard and data."), width={'size': 6, 'offset': 1, 'order': 1}),
-                dbc.Col(html.H4('''Les données organisées, structurées servent la stratégie, elles sont représentées de façon brut et visuelle. Si le principe est identique pour de nombreux projets, les modalités et les options
-                Diffèrent d'une situation à l'autre. Aujourd'hui il existe de nombreuses options pour construire un tableau de bord pertinent et lisible.
-                Cela commence avec une page Jupyter notebook, mais cela pourrait être un tableau construit sur Streamlit, Power BI, Data Studio de google en passant par QlickView ou Tableau.
-            j'ai choisi une façon simple de montrer un tableau de bord, utilisant des données correspondant à l'industrie automobile, ceci à l'aide d' outils simple comme python et Dash le tout déployer sur Heroku.
-            Ceci est un simple exemple pour montrer que tout est possible afin de mettre en évidence des tendances dans le domaine de la business intelligence.''',className='text-left text-primary, mb-6'),
-                width={'size': 6, 'offset': 1, 'order': 1}),
-            ]),
-
-    ], fluid=True)
-
-
-])
-
-#**************Home page end********************************
-
-
-
-
-#**************Page Automobile*************************************
+############Place python##############################
 #data car and processing
 df_car=pd.read_csv('./data/automobile_clean.csv')
 #**********for model*****************************
@@ -100,7 +46,84 @@ for i in make_value:
     val_car.append(i)
 df_make=pd.DataFrame(data=zip(make_name, make_value), columns=['make', 'number_car'])
 fig_pie = px.pie(df_make, values='number_car', names='make', title='''Marques automobile de l'étude''')
+################################
 
+bs='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
+app=dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY],suppress_callback_exceptions=True,
+              meta_tags=[{'name': 'viewport',
+                          'content': 'width=device-width, initial-scale=1.0'}])
+
+server=app.server
+colors = {
+    'background': '##cccccc'
+}
+
+
+app.layout = html.Div([
+    dcc.Location(id='url', refresh=False),
+    html.Div(id='page-content'),
+
+
+])
+
+
+
+#******************Home Page*********************************
+index_page = html.Div([
+dbc.NavbarSimple(
+    children=[
+
+        dbc.NavItem(dbc.NavLink("PAGE CAR", href="/page-2")),
+    ],
+    brand="Home",
+    brand_href="/",
+    color="#20bed8",
+    dark=True,
+),
+    dbc.Container([
+            html.Br(),
+            dbc.Row([
+                html.Br(),
+                dbc.Col(html.H4("Le dashboard pourquoi?"),width={'size': 6, 'offset': 1, 'order': 1}),
+                dbc.Col(html.P('''Les données organisées, structurées sont utiles pour la stratégie et la prise de décision. Elles représentent de façon numérique ou sous la forme de catégories
+                l'information liée à la donnée, les data de votre étude . Trouver le moyen de visualiser ces données est donc important et nécessite une certaine réflexion.
+                Aujourd'hui il existe de nombreuses options pour construire un tableau de bord pertinent et lisible.
+                Cela commence avec une page Jupyter notebook, mais cela pourrait être un tableau construit sur Streamlit, Power BI, Data Studio de google en passant par QlickView ou Tableau.
+            j'ai choisi une façon simple de montrer un tableau de bord, utilisant des données correspondant à l'industrie automobile, ceci à l'aide d' outils simple comme python et Dash le tout déployer sur Heroku.
+            Ceci est un simple exemple pour montrer que tout est possible afin de mettre en évidence des tendances dans le domaine de la business intelligence.''',className='text-left text-primary, mb-6'),
+                width={'size': 6, 'offset': 1, 'order': 1}),
+            ]),
+        dbc.Row([
+           dbc.Col(
+
+               html.Div([
+                   html.H4('Représentation 3D: proportion des automobiles en fonction de leur style'),
+                   html.H6('''Body style: convertible, hatchback: voiture à hayon arrière, sedan: berline, wagon: break, hardtop: convertible cabriolet'''),
+                   dcc.Graph(id="graph3D"),
+                   html.P("Car Width:"),
+                   dcc.RangeSlider(
+                       id='range-slider',
+                       min=0, max=1, step=0.1,
+                       marks={0.2: '0.2', 1: '1.0'},
+                       value=[0.5, 2]
+                   ),
+               ]),
+
+            width={'size': 8, 'offset': 1, 'order': 1}),
+        ]),
+
+    ], fluid=True)
+
+
+])
+
+#**************Home page end********************************
+
+
+
+
+#**************Page Automobile*************************************
+#
 ##############################################
 
 page_2_layout = dbc.Container([
@@ -350,6 +373,19 @@ def update_bar_chart(slider_range):
     Input("values", "value"))
 def generate_chart(names, values):
     fig = px.scatter(df_car, x=names, y=values, color="num-of-doors", size='curb-weight')
+    return fig
+
+#####Callback 3D#######
+@app.callback(
+    Output("graph3D", "figure"),
+    Input("range-slider", "value"))
+def update_bar_chart(slider_range):
+    low, high = slider_range
+    mask = (df_car.width > low) & (df_car.width < high)
+
+    fig = px.scatter_3d(df_car[mask],
+        x='length', y='width', z='height',
+        color="body-style", hover_data=['width'])
     return fig
 
 
