@@ -84,14 +84,16 @@ dbc.NavbarSimple(
             html.Br(),
             dbc.Row([
                 html.Br(),
-                dbc.Col(html.H4("Le dashboard pourquoi?"),width={'size': 6, 'offset': 1, 'order': 1}),
-                dbc.Col(html.P('''Les données organisées, structurées sont utiles pour la stratégie et la prise de décision. Elles représentent de façon numérique ou sous la forme de catégories
+                dbc.Col(html.Div([
+                    html.H3("Le dashboard pourquoi?"),
+                    html.P('''Les données organisées, structurées sont utiles pour la stratégie et la prise de décision. Elles représentent de façon numérique ou sous la forme de catégories
                 l'information liée à la donnée, les data de votre étude . Trouver le moyen de visualiser ces données est donc important et nécessite une certaine réflexion.
                 Aujourd'hui il existe de nombreuses options pour construire un tableau de bord pertinent et lisible.
                 Cela commence avec une page Jupyter notebook, mais cela pourrait être un tableau construit sur Streamlit, Power BI, Data Studio de google en passant par QlickView ou Tableau.
             j'ai choisi une façon simple de montrer un tableau de bord, utilisant des données correspondant à l'industrie automobile, ceci à l'aide d' outils simple comme python et Dash le tout déployer sur Heroku.
-            Ceci est un simple exemple pour montrer que tout est possible afin de mettre en évidence des tendances dans le domaine de la business intelligence.''',className='text-left text-primary, mb-6'),
-                width={'size': 6, 'offset': 1, 'order': 1}),
+            Ceci est un simple exemple pour montrer que tout est possible afin de mettre en évidence des tendances dans le domaine de la business intelligence.''',className='text-left text-primary, mb-6'),]),
+                        width={'size': 6, 'offset': 1, 'order': 1},
+                        xs=12, sm=12, md=12, lg=5, xl=5),
             ]),
         dbc.Row([
            dbc.Col(
@@ -109,7 +111,8 @@ dbc.NavbarSimple(
                    ),
                ]),
 
-            width={'size': 8, 'offset': 1, 'order': 1}),
+               width={'size': 8, 'offset': 1, 'order': 1},
+               xs=12, sm=12, md=12, lg=5, xl=5),
         ]),
 
     ], fluid=True)
@@ -388,7 +391,27 @@ def update_bar_chart(slider_range):
         color="body-style", hover_data=['width'])
     return fig
 
+# external JavaScript files
+external_scripts = [
+    'https://www.google-analytics.com/analytics.js',
+    {'src': 'https://cdn.polyfill.io/v2/polyfill.min.js'},
+    {
+        'src': 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.core.js',
+        'integrity': 'sha256-Qqd/EfdABZUcAxjOkMi8eGEivtdTkh3b65xCZL4qAQA=',
+        'crossorigin': 'anonymous'
+    }
+]
 
+# external CSS stylesheets
+external_stylesheets = [
+    'https://codepen.io/chriddyp/pen/bWLwgP.css',
+    {
+        'href': 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
+        'rel': 'stylesheet',
+        'integrity': 'sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO',
+        'crossorigin': 'anonymous'
+    }
+]
 
 
 if __name__ == '__main__':
