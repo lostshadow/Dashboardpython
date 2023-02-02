@@ -48,12 +48,12 @@ df_make=pd.DataFrame(data=zip(make_name, make_value), columns=['make', 'number_c
 fig_pie = px.pie(df_make, values='number_car', names='make', title='''Marques automobile de l'étude''')
 ################################
 
-bs='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
+bs = 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
 app=dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY],suppress_callback_exceptions=True,
               meta_tags=[{'name': 'viewport',
                           'content': 'width=device-width, initial-scale=1.0'}])
 
-server=app.server
+#server = app.server
 colors = {
     'background': '##cccccc'
 }
@@ -415,7 +415,7 @@ external_stylesheets = [
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run()
 
 
 
