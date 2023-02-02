@@ -15,7 +15,7 @@ from sklearn import linear_model, tree, neighbors
 
 ############Place python##############################
 #data car and processing
-df_car=pd.read_csv('./data/automobile_clean.csv')
+df_car = pd.read_csv('./data/automobile_clean.csv')
 #**********for model*****************************
 X = df_car.price.values[:, None]
 X_train, X_test, y_train, y_test = train_test_split(
@@ -39,9 +39,9 @@ df_car_table=df_test_car.columns
 fuel_type=df_car['fuel-type'].unique()
 
 #**************************************************
-make_name=df_car.make.unique()
-make_value=df_car.make.value_counts()
-val_car=[]
+make_name = df_car.make.unique()
+make_value = df_car.make.value_counts()
+val_car = []
 for i in make_value:
     val_car.append(i)
 df_make=pd.DataFrame(data=zip(make_name, make_value), columns=['make', 'number_car'])
@@ -49,11 +49,13 @@ fig_pie = px.pie(df_make, values='number_car', names='make', title='''Marques au
 ################################
 
 bs = 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
-app=dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY],suppress_callback_exceptions=True,
+
+
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY],suppress_callback_exceptions=True,
               meta_tags=[{'name': 'viewport',
                           'content': 'width=device-width, initial-scale=1.0'}])
 
-#server = app.server
+server = app.server
 colors = {
     'background': '##cccccc'
 }
@@ -70,10 +72,9 @@ app.layout = html.Div([
 
 #******************Home Page*********************************
 index_page = html.Div([
-dbc.NavbarSimple(
-    children=[
-
-        dbc.NavItem(dbc.NavLink("PAGE CAR", href="/page-2")),
+    dbc.NavbarSimple(
+        children=[
+            dbc.NavItem(dbc.NavLink("PAGE CAR", href="/page-2")),
     ],
     brand="Home",
     brand_href="/",
@@ -415,7 +416,7 @@ external_stylesheets = [
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run_server(debug=True)
 
 
 
